@@ -1,9 +1,8 @@
 # Icon resource - uploads icon file if provided
 resource "jamfpro_icon" "self_service_icon" {
-  count            = var.self_service_icon_file_path != null ? 1 : 0
-  icon_file_path   = var.self_service_icon_file_path
+  count          = (var.self_service_use_for_self_service && var.self_service_icon_file_path != null) ? 1 : 0
+  icon_file_path = var.self_service_icon_file_path
 }
-
 resource "jamfpro_policy" "policy" {
   name                          = var.name
   enabled                       = var.enabled
