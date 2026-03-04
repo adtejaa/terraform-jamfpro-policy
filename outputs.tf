@@ -12,3 +12,8 @@ output "category_id" {
   description = "The category ID of the policy"
   value       = jamfpro_policy.policy.category_id
 } 
+
+output "site_id" {
+  description = "The site ID of the policy"
+  value       = jamfpro_policy.policy.site_id
+} 
