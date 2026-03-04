@@ -221,28 +221,31 @@ resource "jamfpro_policy" "policy" {
   }
 
   dynamic "self_service" {
-    for_each = var.self_service_use_for_self_service ? [1] : []
-    content {
-      use_for_self_service            = var.self_service_use_for_self_service
-      self_service_display_name       = var.self_service_display_name
-      self_service_description        = var.self_service_description
-      install_button_text             = var.self_service_install_button_text
-      reinstall_button_text           = var.self_service_reinstall_button_text
-      self_service_icon_id            = var.self_service_icon_file_path != null ? jamfpro_icon.self_service_icon[0].id : null
-      force_users_to_view_description = var.self_service_force_users_to_view_description
-      feature_on_main_page            = var.self_service_feature_on_main_page
-      notification                    = var.self_service_notification
-      notification_subject            = var.self_service_notification_subject
-      notification_message            = var.self_service_notification_message
-      notification_type = var.self_service_notification_type != "" ? var.self_service_notification_type : null
-      dynamic "self_service_category" {
-        for_each = var.self_service_category_id != null ? [1] : []
-        content {
-          id         = var.self_service_category_id
-          display_in = var.self_service_category_display_in
-          feature_in = var.self_service_category_feature_in
-        }
+  for_each = var.self_service_use_for_self_service ? [1] : []
+  content {
+    use_for_self_service            = var.self_service_use_for_self_service
+    self_service_display_name       = var.self_service_display_name
+    self_service_description        = var.self_service_description
+    install_button_text             = var.self_service_install_button_text
+    reinstall_button_text           = var.self_service_reinstall_button_text
+    self_service_icon_id            = var.self_service_icon_file_path != null ? jamfpro_icon.self_service_icon[0].id : null
+    force_users_to_view_description = var.self_service_force_users_to_view_description
+    feature_on_main_page            = var.self_service_feature_on_main_page
+
+    # ✅ only send notification fields when notification is enabled
+    notification         = var.self_service_notification
+    notification_type    = var.self_service_notification ? var.self_service_notification_type : null
+    notification_subject = var.self_service_notification ? var.self_service_notification_subject : null
+    notification_message = var.self_service_notification ? var.self_service_notification_message : null
+
+    dynamic "self_service_category" {
+      for_each = var.self_service_category_id != null ? [1] : []
+      content {
+        id         = var.self_service_category_id
+        display_in = var.self_service_category_display_in
+        feature_in = var.self_service_category_feature_in
       }
     }
   }
+}
 }
