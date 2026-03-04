@@ -695,3 +695,10 @@ variable "payloads_user_interaction_message_finish" {
   type    = string
   default = ""
 }
+
+
+variable "testing_variable" {
+  description = "This is a testing variable to check if the module is working correctly"
+  type        = string
+  default     = "Hello, World!"
+}
