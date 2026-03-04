@@ -232,10 +232,9 @@ resource "jamfpro_policy" "policy" {
       force_users_to_view_description = var.self_service_force_users_to_view_description
       feature_on_main_page            = var.self_service_feature_on_main_page
       notification                    = var.self_service_notification
-      notification_type               = var.self_service_notification_type
       notification_subject            = var.self_service_notification_subject
       notification_message            = var.self_service_notification_message
-
+      notification_type = var.self_service_notification_type != "" ? var.self_service_notification_type : null
       dynamic "self_service_category" {
         for_each = var.self_service_category_id != null ? [1] : []
         content {
